@@ -25,6 +25,8 @@
 
 <script>
     import bus from '../common/bus';
+    import api from "../../fetch/Api";
+
     export default {
         data() {
             return {
@@ -37,11 +39,11 @@
                     },
                     {
                         icon: 'el-icon-setting',
-                        index: '3',
+                        index: '1',
                         title: '系统管理',
                         subs: [
                             {
-                                index: 'user',
+                                index: 'admin',
                                 title: '用户管理'
                             },
                             {
@@ -56,7 +58,7 @@
                     },
                     {
                         icon: 'el-icon-view',
-                        index: '4',
+                        index: '2',
                         title: '系统监控',
                         subs: [
                             {
@@ -67,7 +69,7 @@
                     },
                     {
                         icon: 'el-icon-edit-outline',
-                        index: '5',
+                        index: '3',
                         title: '开发商管理',
                         subs: [
                             {
@@ -78,7 +80,7 @@
                     },
                     {
                         icon: 'el-icon-edit-outline',
-                        index: '6',
+                        index: '4',
                         title: '开发商管理',
                         subs: [
                             {
@@ -95,10 +97,17 @@
                 return this.$route.path.replace('/','');
             }
         },
-        created(){
+        created: function(){
             // 通过 Event Bus 进行组件间通信，来折叠侧边栏
             bus.$on('collapse', msg => {
                 this.collapse = msg;
+            })
+            let account = localStorage.getItem('account');
+            api.getAuthorizationByAccount(account)
+                .then(result => {
+                    this.items = result;
+                }).catch(error => {
+
             })
         }
     }

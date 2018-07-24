@@ -6,14 +6,14 @@
                     <el-col>
                         <el-card shadow="hover" class="mgb20">
                             <div class="user-info">
-                                <img src="static/img/img.jpg" class="user-avator" alt="">
+                                <img :src="headImage" class="user-avator" alt="">
                                 <div class="user-info-cont">
-                                    <div class="user-info-name">{{name}}</div>
-                                    <div>{{role}}</div>
+                                    <div class="user-info-name">{{username}}</div>
+                                    <div>{{roleRemark}}</div>
                                 </div>
                             </div>
-                            <div class="user-info-list">上次登录时间：<span>2018-01-01</span></div>
-                            <div class="user-info-list">上次登录地点：<span>东莞</span></div>
+                            <div class="user-info-list">上次登录时间：<span>{{lastLogin}}</span></div>
+                            <div class="user-info-list">上 次 登 录 IP：<span>192.168.0.1</span></div>
                         </el-card>
                         <el-card shadow="hover">
                             <div slot="header" class="clearfix">
@@ -98,11 +98,16 @@
 </template>
 
 <script>
+    import format from "../../util/date"
+
     export default {
         name: 'dashboard',
         data() {
             return {
-                name: localStorage.getItem('ms_username'),
+                username: '',
+                headImage: 'static/img/img.jpg',
+                lastLogin: '',
+                roleRemark: '',
                 todoList: [
                     {
                         title: '今天要修复100个bug',
@@ -130,10 +135,15 @@
                 ]
             }
         },
-        computed: {
-            role() {
-                return this.name === 'admin' ? '超级管理员' : '普通用户';
-            }
+        created:function () {
+            var adminName = localStorage.getItem('current_admin_name');
+            this.username = adminName;
+            var headImage = localStorage.getItem('current_admin_head_image');
+            this.headImage = headImage;
+            var lastLogin = localStorage.getItem('current_admin_last_login');
+            this.lastLogin = format.formatYYYYMMddHHmmSS(lastLogin);
+            var roleRemark = localStorage.getItem('current_admin_role_remark');
+            this.roleRemark = roleRemark;
         }
     }
 
