@@ -1,2 +1,2 @@
 # operate-system
-home-运营心痛
+home - 管理系统

@@ -33,6 +33,16 @@ export default new Router({
                     path: '/role',
                     component: resolve => require(['../components/page/SysManageRole.vue'], resolve),
                     meta: { title: '角色管理' }
+                },
+                {
+                    path: '/zipkin',
+                    component: resolve => require(['../components/page/Zipkin.vue'], resolve),
+                    meta: { title: '链路追踪' }
+                },
+                {
+                    path: '/eureka',
+                    component: resolve => require(['../components/page/Eureka.vue'], resolve),
+                    meta: { title: '注册中心' }
                 }
             ]
         },
